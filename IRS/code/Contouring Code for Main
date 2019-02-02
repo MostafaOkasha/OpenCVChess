@@ -1,0 +1,34 @@
+    kernel = np.ones((5, 5), np.uint8)
+
+    opening = cv2.morphologyEx(grey_image, cv2.MORPH_OPEN, kernel)
+    #use cv2.MORPH_CLOSE for dilation followed by erosion.
+
+
+    #perform morphological-closing aka opening
+    #dilation
+    #erosion
+    #^^This is to remove any holes in the image. removes noisy dots.
+
+    #set a threshold efficiency to 80%. use hierarchical clustering to merge connnected
+    #components. 
+
+
+    #threshold(gs_img, thresholdvalue,[0,255] - 0 for black 255 for white. brightness
+    #threshold valuye shjould be 127. pixel 255.
+    ret, thresh_img = cv2.threshold(opening,128,255,cv2.THRESH_BINARY)
+
+    #find contours in the image in order to calculate areas and detect squares
+    #im2,contours,hierarchy=cv2.findContours(separated,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
+    im2,contours,h = cv2.findContours(thresh_img,1,2)
+
+    #approximating each contour to check number of elements in all the shapes.
+    #square should have 4 contours
+
+    for cnt in contours:
+        approx = cv2.approxPolyDP(cnt,0.01*cv2.arcLength(cnt,True),True)
+        cont_area = cv2.contourArea(cnt)
+        #print (len(approx))
+        if cont_area >=0:
+            if len(approx)==4:
+                #print ("square")
+                cv2.drawContours(img,[cnt],0,(0,0,255),-1)
