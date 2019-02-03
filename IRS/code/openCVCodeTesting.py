@@ -13,7 +13,7 @@ objp[:,:2] = np.mgrid[0:7,0:6].T.reshape(-1,2)
 objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane.
 
-images = glob.glob('/home/pi/Capstone/IRS/pictures/sample_states/*.jpg')
+images = glob.glob("/home/ubuntu/IRS/main/OpenCVChess/IRS/pictures/*.jpg")
 
 print(images)
 for fname in images[:1]:
